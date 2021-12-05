@@ -19,3 +19,6 @@ RUN /bin/bash -c "rm -rf ~/.asdf && \
                   echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \
                   rm -rf /tmp/*"
 
+WORKDIR /mnt/space/work/react-complete-guide
+
+RUN /bin/bash -c 'asdf install && rm -rf /tmp/*'
