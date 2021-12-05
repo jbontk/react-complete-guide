@@ -21,5 +21,4 @@ RUN /bin/bash -c "rm -rf ~/.asdf && \
 
 WORKDIR /mnt/space/work/react-complete-guide
 
-RUN /bin/bash -c '[ -f "./.tool-versions" ] && asdf install && \
-		    rm -rf /tmp/*'
+RUN /bin/bash -c 'asdf install &&  rm -rf /tmp/*'
