@@ -12,7 +12,7 @@ ENV PATH /root/.asdf/bin:/root/.asdf/shims:$PATH
 
 ENV NODEJS_CHECK_SIGNATURES no
 
-RUN /bin/bash -c  "git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1 && \
+RUN /bin/bash -c  "mkdir ~/.asdf && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1 && \
                   asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git && \
                   asdf install nodejs latest && \
                   echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \
