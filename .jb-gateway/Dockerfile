@@ -12,14 +12,10 @@ ENV PATH /root/.asdf/bin:/root/.asdf/shims:$PATH
 
 ENV NODEJS_CHECK_SIGNATURES no
 
-RUN /bin/bash -c "rm -rf ~/.asdf && \
-                  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1 && \
-                  asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git && \
-                  asdf install nodejs latest && \
-                  echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \
-                  rm -rf /tmp/*"
+RUN mkdir -p /root/.asdf \
+    && git clone https://github.com/asdf-vm/asdf.git /root/.asdf --branch v0.8.1 \
+    && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
+    && asdf install nodejs latest \
+    && echo '. /root/.asdf/asdf.sh' >> /root/.bashrc \
+    && rm -rf /tmp/*
 
-WORKDIR /mnt/space/work/react-complete-guide
-
-RUN /bin/bash -c "[[ -f ./.tool-versions ]] && asdf install && \
-                  rm -rf /tmp/*"
