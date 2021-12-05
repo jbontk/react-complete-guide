@@ -18,3 +18,8 @@ RUN /bin/bash -c "rm -rf ~/.asdf && \
                   asdf install nodejs latest && \
                   echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \
                   rm -rf /tmp/*"
+
+WORKDIR /mnt/space/work/react-complete-guide
+
+RUN /bin/bash -c "[[ -f ./.tool-versions ]] && asdf install && \
+                  rm -rf /tmp/*"
