@@ -25,11 +25,9 @@ const ExpenseForm = (props) => {
     setEnteredTitle('');
     setEnteredAmount('');
     setEnteredDate('');
-
-    props.onEndEditing();
   };
 
-  const endEditingHandler = props.onEndEditing;
+  const endEditingHandler = props.onCancel;
 
   return (
     <form onSubmit={submitHandler}>
