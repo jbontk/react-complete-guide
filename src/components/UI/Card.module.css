@@ -1,8 +1,5 @@
-div.card > * {
-  display: flex;
-  flex-flow: column;
-  row-gap: 10px;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-top: 10px; 
+.card {
+  background: white;
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.26);
+  border-radius: 10px;
 }
