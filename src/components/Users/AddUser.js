@@ -16,6 +16,9 @@ const AddUser = (props) => {
       setEnteredUser('');
       setEnteredAge('');
     }
+    else {
+      props.onError();
+    }
   };
 
   const usernameChangedHandler = (event) => setEnteredUser(event.target.value);
