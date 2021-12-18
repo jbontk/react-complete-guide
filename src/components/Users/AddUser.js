@@ -11,9 +11,10 @@ const AddUser = (props) => {
   const addUserhandler = (event) => {
     event.preventDefault();
     if (enteredUser.trim().length && enteredAge.trim().length && +enteredAge > 0) {
-      console.log(enteredUser, enteredAge);
+      const user = {name: enteredUser, age: enteredAge, id: Math.random().toString()};
+      props.onAdd(user);
       setEnteredUser('');
-      setEnteredAge('')
+      setEnteredAge('');
     }
   };
 
