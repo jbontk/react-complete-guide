@@ -11,13 +11,13 @@ const ErrorModal = (props) => {
   return (
     <div className={classes.backdrop}>
       <Card className={classes.modal}>
-        <div className={classes.header}>
-          <h2>{props.header}</h2>
-        </div>
-        <div className={classes.content}>{props.children}</div>
-        <div className={classes.actions}>
+        <header className={classes.header}>
+          <h2>{props.title}</h2>
+        </header>
+        <p className={classes.content}>{props.message}</p>
+        <footer className={classes.actions}>
           <Button onClick={closeModalHandler}>Close</Button>
-        </div>
+        </footer>
       </Card>
     </div>
   );
