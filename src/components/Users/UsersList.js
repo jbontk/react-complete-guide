@@ -5,7 +5,7 @@ const UsersList = ({ items }) => {
   let content = (
     <ul>
       {items.map((u) => (
-        <li key={u.id}>{`${u.name} - ${u.age}`}</li>
+        <li key={u.id}>{`${u.name} (${u.age} years old)`}</li>
       ))}
     </ul>
   );
