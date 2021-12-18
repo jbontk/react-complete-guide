@@ -8,28 +8,37 @@ import styles from './AddUser.module.css';
 const AddUser = (props) => {
   const [enteredUser, setEnteredUser] = useState('');
   const [enteredAge, setEnteredAge] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [error, setError] = useState();
 
-  const closeErrorModalHandler = () => setModalVisible(false);
+  const closeErrorModalHandler = () => setError();
 
   const addUserhandler = (event) => {
     event.preventDefault();
-    if (
-      enteredUser.trim().length &&
-      enteredAge.trim().length &&
-      +enteredAge > 0
-    ) {
-      const user = {
-        name: enteredUser,
-        age: enteredAge,
-        id: Math.random().toString(),
-      };
-      props.onAdd(user);
-      setEnteredUser('');
-      setEnteredAge('');
-    } else {
-      setModalVisible(true);
+
+    if (!enteredUser.trim().length || !enteredAge.trim().length) {
+      setError({
+        title: 'Invalid input',
+        message: 'Please enter a valid name and age (non-empty values)',
+      });
+      return;
     }
+
+    if (+enteredAge < 1) {
+      setError({
+        title: 'Invalid input',
+        message: 'Please enter a valid age',
+      });
+      return;
+    }
+
+    const user = {
+      name: enteredUser,
+      age: enteredAge,
+      id: Math.random().toString(),
+    };
+    props.onAdd(user);
+    setEnteredUser('');
+    setEnteredAge('');
   };
 
   const usernameChangedHandler = (event) => setEnteredUser(event.target.value);
@@ -37,11 +46,11 @@ const AddUser = (props) => {
 
   return (
     <>
-      {modalVisible && (
+      {error && (
         <ErrorModal
-          title={'Invalid User!'}
+          title={error.title}
           onClose={closeErrorModalHandler}
-          message={'Username must not be empty and Age must be greater than zero'}
+          message={error.message}
         />
       )}
       <Card className={styles.input}>
