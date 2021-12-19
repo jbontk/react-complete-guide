@@ -13,8 +13,18 @@ const AddUser = (props) => {
 
   const closeErrorModalHandler = () => setError(null);
 
+  const resetInputs = (...refs) => {
+    // It is not usually recommended to change the DOM (here by changing .current.value)
+    // Here, it is arguably fine because we are not a creating/removing a DOM element, we are just resetting
+    // two inputs elements
+    if (!refs || !refs?.length) return;
+    refs.forEach((r) => (r.current.value = ''));
+  };
+
   const addUserhandler = (event) => {
     event.preventDefault();
+    
+    // Ref vs. State, when to use? If you just want to read a value, use Ref which is lighter
     const enteredNameRef = nameInputRef?.current?.value;
     const enteredAgeRef = ageInputRef?.current?.value;
 
@@ -41,13 +51,7 @@ const AddUser = (props) => {
     };
     props.onAdd(user);
 
-    // Ref vs. State, when to use? If you just want to read a value, use Ref which is lighter
-
-    // It is not usually recommended to change the DOM (here by changing .current.value)
-    // Here, it is arguably fine because we are not a creating/removing a DOM element, we are just resetting
-    // two inputs elements
-    nameInputRef.current.value = '';
-    ageInputRef.current.value = '';
+    resetInputs(nameInputRef, ageInputRef);
   };
 
   return (
