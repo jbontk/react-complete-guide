@@ -1,0 +1,4 @@
+const USER_INPUT = 'USER_INPUT';
+const INPUT_BLUR = 'INPUT_BLUR';
+
+export {USER_INPUT, INPUT_BLUR};
