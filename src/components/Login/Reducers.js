@@ -10,7 +10,18 @@ const emailReducer = (state, action) => {
       return { value: '', isValid: false };
   }
 };
+const isValidEmail = (value) => value.includes('@');
 
-const isValidEmail = (email) => email.includes('@');
+const passwordReducer = (state, action) => {
+  switch (action.type) {
+    case actions.USER_INPUT:
+      return { value: action.value, isValid: isValidPassword(action.value) };
+    case actions.INPUT_BLUR:
+      return { ...state, isValid: isValidPassword(state.value) };
+    default:
+      return { value: '', isValid: false };
+  }
+};
+const isValidPassword = (value) => value.trim().length > 6;
 
-export { emailReducer };
+export { emailReducer, passwordReducer };
