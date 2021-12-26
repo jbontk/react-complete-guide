@@ -4,8 +4,8 @@ import AuthContext from '../../store/auth-context';
 import classes from './Navigation.module.css';
 
 const Navigation = (props) => (
-  <AuthContext.Consumer
-    children={(ctx) => (
+  <AuthContext.Consumer>
+    {(ctx) => (
       <nav className={classes.nav}>
         <ul>
           {ctx.isLoggedIn && (
@@ -26,7 +26,7 @@ const Navigation = (props) => (
         </ul>
       </nav>
     )}
-  />
+  </AuthContext.Consumer>
 );
 
 export default Navigation;
