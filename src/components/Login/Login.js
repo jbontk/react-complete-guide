@@ -7,6 +7,7 @@ import Button from '../UI/Button/Button';
 import * as reducers from './Reducers';
 import * as actions from './Actions';
 import AuthContext from '../../store/auth-context';
+import Input from '../UI/Input/Input';
 
 const Login = () => {
   const authCtx = useContext(AuthContext);
@@ -17,14 +18,16 @@ const Login = () => {
     value: '',
     isValid: null,
   });
-  const [passwordState, passwordDispatch] = useReducer(reducers.passwordReducer, {
-    value: '',
-    isValid: null,
-  });
+  const [passwordState, passwordDispatch] = useReducer(
+    reducers.passwordReducer,
+    {
+      value: '',
+      isValid: null,
+    }
+  );
 
-
-  const { isValid: emailIsValid} = emailState;
-  const { isValid: passwordIsValid} = passwordState;
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
 
   useEffect(() => {
     const cleanupFunction = () => {
@@ -39,7 +42,7 @@ const Login = () => {
       );
 
       // Ok to refer to a previous state in a state updating function here:
-      // no risk of referring to an outdated state, because inside useEffect, 
+      // no risk of referring to an outdated state, because inside useEffect,
       // which is guaranteed to run after re-render, thus after
       // the state has been updated.
       setFormIsValid(emailIsValid && passwordIsValid);
@@ -49,21 +52,20 @@ const Login = () => {
 
     // depending on nested properties (isValid) to avoid unecessary effect execution
     // (rather than passing the whole object which re-run the effect function whenever ANY property changes)
-  }, [emailIsValid, passwordIsValid]); 
-  
+  }, [emailIsValid, passwordIsValid]);
 
   const emailChangeHandler = (event) =>
     emailDispatch({ type: actions.USER_INPUT, value: event.target.value });
 
-    const passwordChangeHandler = (event) =>
+  const passwordChangeHandler = (event) =>
     passwordDispatch({ type: actions.USER_INPUT, value: event.target.value });
 
   const blurEmailHandler = () => {
-    emailDispatch({type: actions.INPUT_BLUR});
+    emailDispatch({ type: actions.INPUT_BLUR });
   };
 
   const blurPasswordHandler = () => {
-    passwordDispatch({type: actions.INPUT_BLUR});
+    passwordDispatch({ type: actions.INPUT_BLUR });
   };
 
   const submitHandler = (event) => {
@@ -74,34 +76,24 @@ const Login = () => {
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            emailState.isValid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor='email'>E-Mail</label>
-          <input
-            type='email'
-            id='email'
-            value={emailState.value}
-            onChange={emailChangeHandler}
-            onBlur={blurEmailHandler}
-          />
-        </div>
-        <div
-          className={`${classes.control} ${
-            passwordState.isValid === false ? classes.invalid : ''
-          }`}
-        >
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            id='password'
-            value={passwordState.value}
-            onChange={passwordChangeHandler}
-            onBlur={blurPasswordHandler}
-          />
-        </div>
+        <Input
+          isValid={emailState.isValid}
+          type='email'
+          id='email'
+          value={emailState.value}
+          label='E-mail'
+          onChange={emailChangeHandler}
+          onBlur={blurEmailHandler}
+        />
+        <Input
+          isValid={passwordState.isValid}
+          type='password'
+          id='password'
+          value={passwordState.value}
+          label='Password'
+          onChange={passwordChangeHandler}
+          onBlur={blurPasswordHandler}
+        />
         <div className={classes.actions}>
           <Button type='submit' className={classes.btn} disabled={!formIsValid}>
             Login
