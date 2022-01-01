@@ -13,7 +13,7 @@ import Button from '../UI/Button/Button';
 import * as reducers from './Reducers';
 import * as actions from './Actions';
 import AuthContext from '../../store/auth-context';
-import Input, { activate } from '../UI/Input/Input';
+import Input from '../UI/Input/Input';
 
 const Login = () => {
   const authCtx = useContext(AuthContext);
@@ -83,9 +83,9 @@ const Login = () => {
     if (formIsValid) {
       authCtx.onLogin(emailState.value, passwordState.value);
     } else if (!emailIsValid) {
-      activate(emailRef);
+      emailRef.current.focus();
     } else {
-      activate(passwordRef);
+      passwordRef.current.focus();
     }
   };
 
