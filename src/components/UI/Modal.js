@@ -1,31 +1,25 @@
 import classes from './Modal.module.css';
-import Card from './Card';
-import rd from 'react-dom';
+import ReactDOM from 'react-dom';
 
 const Backdrop = (props) => (
   <div className={classes.backdrop} onClick={props.onClick} />
 );
 
 const ModalOverlay = (props) => (
-  <Card className={classes.modal}>
-    <header>{props.title}</header>
-    <main>{props.children}</main>
-  </Card>
+  <div className={classes.modal}>
+    <div className={classes.content}>{props.children}</div>
+  </div>
 );
 
-const Modal = (props) => {
-  return (
-    <>
-      {rd.createPortal(
-        <Backdrop onClick={props.onClose} />,
-        document.getElementById('backdrop-root')
-      )}
-      {rd.createPortal(
-        <ModalOverlay title={props.title}>{props.children}</ModalOverlay>,
-        document.getElementById('overlay-root')
-      )}
-    </>
-  );
-};
+const portalElement = document.getElementById('overlay-root');
+const Modal = (props) => (
+  <>
+    {ReactDOM.createPortal(<Backdrop onClick={props.onClose} />, portalElement)}
+    {ReactDOM.createPortal(
+      <ModalOverlay>{props.children}</ModalOverlay>,
+      portalElement
+    )}
+  </>
+);
 
 export default Modal;
