@@ -16,12 +16,14 @@ const Cart = (props) => {
     </ul>
   );
 
+  const totalAmount = Number(cartContext.totalAmount).toFixed(2);
+
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
-        <span>{cartContext.totalAmount}</span>
+        <span>{totalAmount}</span>
       </div>
       <div className={classes.actions}>
         <button className={classes['button--alt']} onClick={props.onClose}>

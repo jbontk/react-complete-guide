@@ -24,11 +24,7 @@ const cartReducer = (state, action) => {
       }
       return { ...state };
     default:
-      return { 
-        items: {}, 
-        totalAmount: 0, 
-        numberOfItems: 0 
-      };
+      return INITIAL_CART_STATE;
   }
 };
 
@@ -46,5 +42,7 @@ const addItem = (state, actionValue) => {
   }
   return result;
 };
+
+export const INITIAL_CART_STATE = {items: {}, totalAmount: 0, numberOfItems: 0}; // items = {1: {item: {id: 1, name: ..}, quantity: ..}, 2: {item: {id: 2, name: ..}, quantity: ..}, ... }
 
 export default cartReducer;
