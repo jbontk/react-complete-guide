@@ -8,8 +8,8 @@ import CartContext from './cart-context';
 const CartProvider = (props) => {
   const [state, cartDispatch] = useReducer(cartReducer, INITIAL_CART_STATE);
 
-  const addItemToCartHandler = (item, quantity) => {
-    const sanitizedQuantity = quantity || 1;
+  const addItemToCartHandler = (item) => {
+    const sanitizedQuantity = item.quantity || 1;
     console.log(
       'adding item',
       item,
@@ -18,11 +18,11 @@ const CartProvider = (props) => {
       'context items are currently (before add)',
       context.items
     );
-    cartDispatch({ type: actions.ADD, value: {item, quantity} });
+    cartDispatch({ type: actions.ADD, value: { item } });
   };
 
-  const removeItemFromCartHandler = (id) => {
-    cartDispatch({type: actions.REMOVE, value: id});
+  const removeItemFromCartHandler = (id, quantity) => {
+    cartDispatch({ type: actions.REMOVE, value: { id, quantity } });
   };
 
   const context = {

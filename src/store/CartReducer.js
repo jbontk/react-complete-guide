@@ -7,19 +7,28 @@ const cartReducer = (state, action) => {
       const itemsAfterAdd = addItem(state.items, actionValueItem);
       return {
         items: itemsAfterAdd,
-        totalAmount: state.totalAmount + actionValueItem.price * actionValueItem.quantity,
+        totalAmount:
+          state.totalAmount + actionValueItem.price * actionValueItem.quantity,
         numberOfItems: Object.values(itemsAfterAdd).length,
       };
     case actions.REMOVE:
-      const idToRemove = action.value.item.id;
-      const itemQtyPairToRemove = state.items[idToRemove];
-      if (itemQtyPairToRemove) {
+      const idToRemove = action.value.id;
+      const quantityToRemove = action.value.quantity;
+      const itemToRemove = state.items[idToRemove];
+      if (itemToRemove && quantityToRemove >= 0) {
         const itemsAfterRemove = { ...state.items };
-        delete itemsAfterRemove[action.value.item.id];
+        if (quantityToRemove >= itemToRemove.quantity) {
+          delete itemsAfterRemove[idToRemove];
+        } else {
+          itemsAfterRemove[idToRemove].quantity -= quantityToRemove;
+        }
         return {
           items: itemsAfterRemove,
-          totalAmount: state.totalAmount - itemQtyPairToRemove.item.price * itemQtyPairToRemove.quantity,
-          numberOfItems: state.numberOfItems - 1,
+          totalAmount:
+            state.totalAmount -
+            itemToRemove.price *
+              Math.min(itemToRemove.quantity, quantityToRemove),
+          numberOfItems: Object.values(itemsAfterRemove).length,
         };
       }
       return { ...state };
@@ -35,13 +44,17 @@ const addItem = (items, itemToAdd) => {
   if (itemToUpdate) {
     result[idToUpdate].quantity += itemToAdd.quantity;
   } else {
-    result[idToUpdate] = {...itemToAdd};
+    result[idToUpdate] = { ...itemToAdd };
   }
   return result;
 };
 
 // Model: items = {1: {id: 1, name: .., quantity: ..}, 2: {id: 2, name: .., quantity: ..}, ... }
 // Note the extra "quantity" property
-export const INITIAL_CART_STATE = {items: {}, totalAmount: 0, numberOfItems: 0}; 
+export const INITIAL_CART_STATE = {
+  items: {},
+  totalAmount: 0,
+  numberOfItems: 0,
+};
 
 export default cartReducer;

@@ -8,14 +8,14 @@ import CartItem from './CartItem';
 
 const Cart = (props) => {
   const cartContext = useContext(CartContext);
-
-  const cartItemRemoveHandler = (id) => {};
-  const cartItemAddHandler = (item) => {};
+  
+  const cartItemAddHandler = (item) => cartContext.addItem({...item, quantity: 1});
+  const cartItemRemoveHandler = (id) => cartContext.removeItem(id, 1);
 
   const cartItems = (
     <ul className={classes['cart-items']}>
       {Object.values(cartContext.items)?.map((i) => (
-        <CartItem key={i.id} {...i} onAdd={cartItemAddHandler} onRemove={cartItemRemoveHandler} />
+        <CartItem key={i.id} {...i} onAdd={cartItemAddHandler.bind(null, i)} onRemove={cartItemRemoveHandler.bind(null, i.id)} />
       ))}
     </ul>
   );
