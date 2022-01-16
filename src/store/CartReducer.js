@@ -3,11 +3,11 @@ import * as actions from './Actions';
 const cartReducer = (state, action) => {
   switch (action.type) {
     case actions.ADD:
-      const actionValue = action.value; // {item: .., quantity: ..}
-      const itemsAfterAdd = addItem(state, action.value);
+      const actionValueItem = action.value.item;
+      const itemsAfterAdd = addItem(state.items, actionValueItem);
       return {
         items: itemsAfterAdd,
-        totalAmount: state.totalAmount + actionValue.item.price * actionValue.quantity,
+        totalAmount: state.totalAmount + actionValueItem.price * actionValueItem.quantity,
         numberOfItems: Object.values(itemsAfterAdd).length,
       };
     case actions.REMOVE:
@@ -28,21 +28,20 @@ const cartReducer = (state, action) => {
   }
 };
 
-const addItem = (state, actionValue) => {
-  const idToUpdate = actionValue.item.id;
-  const itemToUpdate = state.items[idToUpdate];
-  const result = { ...state.items };
+const addItem = (items, itemToAdd) => {
+  const idToUpdate = itemToAdd.id;
+  const itemToUpdate = items[idToUpdate];
+  const result = { ...items };
   if (itemToUpdate) {
-    result[idToUpdate].quantity += actionValue.quantity;
+    result[idToUpdate].quantity += itemToAdd.quantity;
   } else {
-    result[idToUpdate] = {
-      item: actionValue.item,
-      quantity: actionValue.quantity,
-    };
+    result[idToUpdate] = {...itemToAdd};
   }
   return result;
 };
 
-export const INITIAL_CART_STATE = {items: {}, totalAmount: 0, numberOfItems: 0}; // items = {1: {item: {id: 1, name: ..}, quantity: ..}, 2: {item: {id: 2, name: ..}, quantity: ..}, ... }
+// Model: items = {1: {id: 1, name: .., quantity: ..}, 2: {id: 2, name: .., quantity: ..}, ... }
+// Note the extra "quantity" property
+export const INITIAL_CART_STATE = {items: {}, totalAmount: 0, numberOfItems: 0}; 
 
 export default cartReducer;

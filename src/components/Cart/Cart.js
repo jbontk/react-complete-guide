@@ -11,7 +11,7 @@ const Cart = (props) => {
   const cartItems = (
     <ul className={classes['cart-items']}>
       {Object.values(cartContext.items)?.map((i) => (
-        <li key={i.item.id}>{i.item.name} ({i.quantity})</li>
+        <li key={i.id}>{i.name} ({i.quantity})</li>
       ))}
     </ul>
   );
