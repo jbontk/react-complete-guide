@@ -11,7 +11,14 @@ const MealItemForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     const quantity = quantityInputRef?.current?.value;
-    cartContext.addItem(props.item, +quantity);
+    const quantityAsNumber = +quantity;
+
+    // input check
+    if (quantity.trim().length === 0 || quantityAsNumber < 1 || quantityAsNumber > 5) {
+      return;
+    }
+
+    cartContext.addItem(props.item, quantityAsNumber);
   };
 
   return (
