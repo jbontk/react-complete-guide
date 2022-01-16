@@ -10,8 +10,8 @@ const Cart = (props) => {
 
   const cartItems = (
     <ul className={classes['cart-items']}>
-      {cartContext.items.map((i) => (
-        <li key={i.id}>{i.name}</li>
+      {Object.values(cartContext.items)?.map((i) => (
+        <li key={i.item.id}>{i.item.name} ({i.quantity})</li>
       ))}
     </ul>
   );

@@ -1,21 +1,38 @@
+import { useReducer } from 'react';
+
+import * as actions from './Actions';
+import cartReducer from './CartReducer';
+
 import CartContext from './cart-context';
 
 const CartProvider = (props) => {
+  const [state, cartDispatch] = useReducer(cartReducer, {
+    items: [], // [{item: {id:.., name: ..}, quantity: x}, {item:..., quantity: ...}, ...]
+    totalAmount: 0,
+    numberOfItems: 0
+  });
 
   const addItemToCartHandler = (item, quantity) => {
     const sanitizedQuantity = quantity || 1;
-    for (let i = 0; i < sanitizedQuantity; i++) {
-      context.items.push(item);
-    }
-    console.log('added item', item, 'quantity', sanitizedQuantity, 'context items are now', context.items);
+    console.log(
+      'adding item',
+      item,
+      'quantity',
+      sanitizedQuantity,
+      'context items are currently (before add)',
+      context.items
+    );
+    cartDispatch({ type: actions.ADD, value: {item, quantity} });
   };
+
   const removeItemFromCartHandler = (id) => {
-    context.items = context.items.filter((item) => item.id !== id);
+    cartDispatch({type: actions.REMOVE, value: id});
   };
 
   const context = {
-    items: [],
-    totalAmount: 0,
+    items: state.items,
+    totalAmount: state.totalAmount,
+    numberOfItems: state.numberOfItems,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
   };
