@@ -4,8 +4,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8
 
 
-RUN apt-get update
-RUN apt-get install -y git curl gpg dirmngr gawk \
+RUN apt-get update && apt-get install -y apt-utils apt-transport-https
+RUN apt-get install -y \
+  # Utilities \
+  curl unzip wget software-properties-common socat man-db gnupg2 pass lsof gpg dirmngr gawk \
+  # VCS \
+  git \
+  # Docker
+  docker docker-compose \
   && rm -rf /var/lib/apt/lists/*
 
 ENV PATH /root/.asdf/bin:/root/.asdf/shims:$PATH
