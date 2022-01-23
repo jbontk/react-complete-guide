@@ -9,7 +9,7 @@ const cartReducer = (state, action) => {
         items: itemsAfterAdd,
         totalAmount:
           state.totalAmount + actionValueItem.price * actionValueItem.quantity,
-        numberOfItems: Object.values(itemsAfterAdd).length,
+        numberOfItems: sumQuantities(itemsAfterAdd)
       };
     case actions.REMOVE:
       const idToRemove = action.value.id;
@@ -28,7 +28,7 @@ const cartReducer = (state, action) => {
             state.totalAmount -
             itemToRemove.price *
               Math.min(itemToRemove.quantity, quantityToRemove),
-          numberOfItems: Object.values(itemsAfterRemove).length,
+          numberOfItems: sumQuantities(itemsAfterRemove)
         };
       }
       return { ...state };
@@ -48,6 +48,11 @@ const addItem = (items, itemToAdd) => {
   }
   return result;
 };
+
+const sumQuantities = items => {
+  if (!items) return 0;
+  return Object.values(items).map(i => i.quantity).reduce((sum, quantity) => sum + quantity);
+}
 
 // Model: items = {1: {id: 1, name: .., quantity: ..}, 2: {id: 2, name: .., quantity: ..}, ... }
 // Note the extra "quantity" property
