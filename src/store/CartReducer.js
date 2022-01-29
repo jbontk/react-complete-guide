@@ -50,7 +50,7 @@ const addItem = (items, itemToAdd) => {
 };
 
 const sumQuantities = items => {
-  if (!items) return 0;
+  if (!items || !Object.keys(items).length) return 0;
   return Object.values(items).map(i => i.quantity).reduce((sum, quantity) => sum + quantity);
 }
 
