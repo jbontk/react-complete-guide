@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import Button from './components/UI/Button/Button';
 import DemoOutput from './components/Demo/DemoOutput';
@@ -10,7 +10,12 @@ const App = (props) => {
 
   console.log('APP RUNNING');
 
-  const toggleParagraphHandler = () => setShowParagraph((prev) => !prev);
+  // With useCallback hook, toggleParagraphHandler is guaranteed to be always the same object in memory
+  // (useCallback "saves" our function for subsequent calls)
+  // the 2nd argument, the array of dependencies is empty because it never changes
+  // (we could have added setShowParagraph as a dependency, but by design of React's useState hook, that setter state function never 
+  // changes (neither shallowly nor deeply))
+  const toggleParagraphHandler = useCallback(() => setShowParagraph((prev) => !prev), []);
 
   return (
     <div className='app'>
