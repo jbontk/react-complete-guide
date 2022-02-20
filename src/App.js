@@ -6,18 +6,18 @@ import './App.css';
 function App() {
   const [movies, setMovies] = useState([]);
 
-  const fetchMoviesHandler = () =>
-    fetch('https://swapi.py4e.com/api/films')
-      .then((res) => res.json())
-      .then((res) => {
-        const transformedMovies = res.results.map((m) => ({
-          id: m.episode_id,
-          title: m.title,
-          releaseDate: m.release_date,
-          openingText: m.opening_crawl,
-        }));
-        return setMovies(transformedMovies);
-      });
+  const fetchMoviesHandler = async () => {
+    const response = await fetch('https://swapi.py4e.com/api/films');
+    const data = await response.json();
+    
+    const transformedMovies = data.results.map((m) => ({
+      id: m.episode_id,
+      title: m.title,
+      releaseDate: m.release_date,
+      openingText: m.opening_crawl,
+    }));
+    setMovies(transformedMovies);
+  };
 
   return (
     <React.Fragment>
