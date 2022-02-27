@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import MoviesList from './components/MoviesList';
 import AddMovie from './components/AddMovie';
 import './App.css';
+import { MOVIES_API } from './Constants';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -13,19 +14,19 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('https://react-http-9cf69-default-rtdb.europe-west1.firebasedatabase.app/movies.json');
+      const response = await fetch(MOVIES_API);
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
 
       const data = await response.json();
 
-      const transformedMovies = data.results.map((movieData) => {
+      const transformedMovies = Object.keys(data).map(k => {
         return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date,
+          id: k,
+          title: data[k].title,
+          openingText: data[k].openingText,
+          releaseDate: data[k].releaseDate,
         };
       });
       setMovies(transformedMovies);
@@ -40,7 +41,13 @@ function App() {
   }, [fetchMoviesHandler]);
 
   function addMovieHandler(movie) {
-    console.log(movie);
+    fetch(MOVIES_API, {
+      method: 'POST',
+      body: JSON.stringify(movie),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   let content = <p>Found no movies.</p>;
