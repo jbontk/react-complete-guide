@@ -28,6 +28,7 @@ const Tasks = (props) => {
   return (
     <Section>
       <div className={classes.container}>{content}</div>
+      <div className={classes.button}><button onClick={props.onFetch}>Refetch</button></div>
     </Section>
   );
 };
