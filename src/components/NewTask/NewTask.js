@@ -5,6 +5,14 @@ import Section from '../UI/Section';
 import TaskForm from './TaskForm';
 
 const NewTask = (props) => {
+
+  const addTask = (taskText, newTaskObj) => {
+    const generatedId = newTaskObj.name; // firebase-specific => "name" contains generated id
+    const createdTask = { id: generatedId, text: taskText };
+
+    props.onAddTask(createdTask);
+  };
+
   const { isLoading, error, sendRequest } = useHttp();
 
   const enterTaskHandler = (taskText) => {
@@ -15,14 +23,7 @@ const NewTask = (props) => {
       body: { text: taskText },
     };
 
-    const transformResponseFn = (newTaskObj) => {
-      const generatedId = newTaskObj.name; // firebase-specific => "name" contains generated id
-      const createdTask = { id: generatedId, text: taskText };
-
-      props.onAddTask(createdTask);
-    };
-
-    sendRequest(requestConfig, transformResponseFn);
+    sendRequest(requestConfig, addTask.bind(null, taskText));
   };
 
   return (
