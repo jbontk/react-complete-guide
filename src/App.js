@@ -9,16 +9,16 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const { isLoading, error, sendRequest: fetchTasks } = useHttp();
 
-  useEffect(() => {
-    const transformResponseFn = tasksObj =>
-      setTasks(
-        Object.keys(tasksObj).map((k) => ({
-          id: k,
-          text: tasksObj[k].text,
-        }))
-      );
+  const transformResponseFn = (tasksObj) =>
+    setTasks(
+      Object.keys(tasksObj).map((k) => ({
+        id: k,
+        text: tasksObj[k].text,
+      }))
+    );
 
-    fetchTasks({url: TASKS_API}, transformResponseFn);
+  useEffect(() => {
+    fetchTasks({ url: TASKS_API }, transformResponseFn);
   }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
@@ -33,13 +33,7 @@ function App() {
           items={tasks}
           loading={isLoading}
           error={error}
-          onFetch={() => fetchTasks({url: TASKS_API}, tasksObj =>
-            setTasks(
-              Object.keys(tasksObj).map((k) => ({
-                id: k,
-                text: tasksObj[k].text,
-              }))
-            ))}
+          onFetch={() => fetchTasks({ url: TASKS_API }, transformResponseFn)}
         />
       </React.Fragment>
     </React.StrictMode>
