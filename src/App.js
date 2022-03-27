@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
@@ -8,17 +8,18 @@ import { TASKS_API } from './constants';
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const transformResponseFn = (tasksObj) =>
+  const transformResponseFn = useCallback(tasksObj =>
     setTasks(
       Object.keys(tasksObj).map((k) => ({
         id: k,
         text: tasksObj[k].text,
       }))
-    );
+    ), []);
+  const requestConfig = useMemo(() => ({url: TASKS_API}), [] );
 
-  const { isLoading, error, sendRequest: fetchTasks } = useHttp({ url: TASKS_API }, transformResponseFn);
+  const { isLoading, error, sendRequest: fetchTasks } = useHttp(requestConfig, transformResponseFn);
 
-  useEffect(() => fetchTasks(), []);
+  useEffect(() => fetchTasks(), [fetchTasks]);
 
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
