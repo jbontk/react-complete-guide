@@ -2,26 +2,21 @@ import React, { useEffect, useState } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
-import useTask from './hooks/use-task';
+import useHttp from './hooks/use-http';
+import { TASKS_API } from './constants';
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [isLoading, error, request] = useTask();
 
-  const fetchTasks = async () => {
-    const responseDataInternal = await request();
+  const transformResponseFn = (tasksObj) =>
+    setTasks(
+      Object.keys(tasksObj).map((k) => ({
+        id: k,
+        text: tasksObj[k].text,
+      }))
+    );
 
-    if (responseDataInternal) {
-      setTasks(
-        Object.keys(responseDataInternal).map((k) => ({
-          id: k,
-          text: responseDataInternal[k].text,
-        }))
-      );
-    } else {
-      console.warn('Warning: falsey data in response');
-    }
-  };
+  const { isLoading, error, sendRequest: fetchTasks } = useHttp({ url: TASKS_API }, transformResponseFn);
 
   useEffect(() => fetchTasks(), []);
 
