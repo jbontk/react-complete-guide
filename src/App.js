@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
@@ -7,19 +7,19 @@ import { TASKS_API } from './constants';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const { isLoading, error, sendRequest: fetchTasks } = useHttp();
 
-  const transformResponseFn = useCallback(tasksObj =>
-    setTasks(
-      Object.keys(tasksObj).map((k) => ({
-        id: k,
-        text: tasksObj[k].text,
-      }))
-    ), []);
-  const requestConfig = useMemo(() => ({url: TASKS_API}), [] );
+  useEffect(() => {
+    const transformResponseFn = tasksObj =>
+      setTasks(
+        Object.keys(tasksObj).map((k) => ({
+          id: k,
+          text: tasksObj[k].text,
+        }))
+      );
 
-  const { isLoading, error, sendRequest: fetchTasks } = useHttp(requestConfig, transformResponseFn);
-
-  useEffect(() => fetchTasks(), [fetchTasks]);
+    fetchTasks({url: TASKS_API}, transformResponseFn);
+  }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
@@ -33,7 +33,13 @@ function App() {
           items={tasks}
           loading={isLoading}
           error={error}
-          onFetch={fetchTasks}
+          onFetch={() => fetchTasks({url: TASKS_API}, tasksObj =>
+            setTasks(
+              Object.keys(tasksObj).map((k) => ({
+                id: k,
+                text: tasksObj[k].text,
+              }))
+            ))}
         />
       </React.Fragment>
     </React.StrictMode>

@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 
-const useHttp = (requestConfig, tranformResponseFn) => {
+const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = useCallback(async () => {
+  const sendRequest = useCallback(async (requestConfig, tranformResponseFn) => {
     const fetchParams = {
       method: requestConfig.method || 'GET',
       body: requestConfig.body ? JSON.stringify(requestConfig.body) : null,
@@ -27,7 +27,7 @@ const useHttp = (requestConfig, tranformResponseFn) => {
     } finally {
       setIsLoading(false);
     }
-  }, [requestConfig, tranformResponseFn]);
+  }, []);
 
   return { isLoading, error, sendRequest };
 };
