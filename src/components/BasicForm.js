@@ -5,27 +5,29 @@ const BasicForm = (props) => {
   //
   // Inputs
   //
+  const notEmpty = (v) => v?.trim().length > 0;
   const {
     value: firstName,
     hasErrors: firstNameHasErrors,
     valueChangeHandler: firstNameChanged,
     inputBlurHandler: firstNameBlur,
     reset: firstNameReset,
-  } = useInput((v) => v?.trim().length > 0);
+  } = useInput(notEmpty);
   const {
     value: lastName,
     hasErrors: lastNameHasErrors,
     valueChangeHandler: lastNameChanged,
     inputBlurHandler: lastNameBlur,
     reset: lastNameReset,
-  } = useInput((v) => v?.trim().length > 0);
+  } = useInput(notEmpty);
+  const isEmail = (v) => v?.includes('@');
   const {
     value: email,
     hasErrors: emailHasErrors,
     valueChangeHandler: emailChanged,
     inputBlurHandler: emailBlur,
     reset: emailReset,
-  } = useInput((v) => v?.includes('@'));
+  } = useInput(isEmail);
 
   //
   // CSS classes
@@ -35,6 +37,14 @@ const BasicForm = (props) => {
   const firstNameClasses = getCssClasses(firstNameHasErrors);
   const lastNameClasses = getCssClasses(lastNameHasErrors);
   const emailClasses = getCssClasses(emailHasErrors);
+
+  //
+  // Form validity
+  //
+  let formHasErrors = true;
+  if (!firstNameHasErrors && !lastNameHasErrors && !emailHasErrors) {
+    formHasErrors = false;
+  }
 
   //
   // Submit Form
@@ -112,7 +122,7 @@ const BasicForm = (props) => {
         )}
       </div>
       <div className='form-actions'>
-        <button>Submit</button>
+        <button disabled={formHasErrors}>Submit</button>
       </div>
     </form>
   );
