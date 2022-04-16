@@ -7,7 +7,8 @@ tasks:
       git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0
       echo . $HOME/.asdf/asdf.sh >> $HOME/.bashrc
       echo . $HOME/.asdf/completions/asdf.bash >> $HOME/.bashrc
-      asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+      $HOME/.asdf/bin/asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+      $HOME/.asdf/bin/asdf install
       npm install && npm run build
     command: npm run start
 
