@@ -8,6 +8,7 @@ const BasicForm = (props) => {
   const notEmpty = (v) => v?.trim().length > 0;
   const {
     value: firstName,
+    isValid: firstNameIsValid,
     hasErrors: firstNameHasErrors,
     valueChangeHandler: firstNameChanged,
     inputBlurHandler: firstNameBlur,
@@ -15,6 +16,7 @@ const BasicForm = (props) => {
   } = useInput(notEmpty);
   const {
     value: lastName,
+    isValid: lastNameIsValid,
     hasErrors: lastNameHasErrors,
     valueChangeHandler: lastNameChanged,
     inputBlurHandler: lastNameBlur,
@@ -23,6 +25,7 @@ const BasicForm = (props) => {
   const isEmail = (v) => v?.includes('@');
   const {
     value: email,
+    isValid: emailIsValid,
     hasErrors: emailHasErrors,
     valueChangeHandler: emailChanged,
     inputBlurHandler: emailBlur,
@@ -41,9 +44,9 @@ const BasicForm = (props) => {
   //
   // Form validity
   //
-  let formHasErrors = true;
-  if (!firstNameHasErrors && !lastNameHasErrors && !emailHasErrors) {
-    formHasErrors = false;
+  let formIsValid = false;
+  if (firstNameIsValid && lastNameIsValid && emailIsValid) {
+    formIsValid = true;
   }
 
   //
@@ -53,16 +56,9 @@ const BasicForm = (props) => {
     e.preventDefault();
 
     //
-    // Call blur
-    //
-    firstNameBlur();
-    lastNameBlur();
-    emailBlur();
-
-    //
     // Validate
     //
-    if (firstNameHasErrors || lastNameHasErrors || emailHasErrors) {
+    if (!formIsValid) {
       return;
     }
 
@@ -122,7 +118,7 @@ const BasicForm = (props) => {
         )}
       </div>
       <div className='form-actions'>
-        <button disabled={formHasErrors}>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
