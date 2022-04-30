@@ -1,36 +1,26 @@
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
-
-const DUMMY_MEALS = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
+import useHttp from "../../hooks/use-http";
+import {useEffect, useState} from "react";
+import {MEALS_API} from "../../Constants";
 
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
+
+  const [meals, setMeals] = useState([]);
+  const { isLoading, error, sendRequest: fetchMeals } = useHttp();
+
+  useEffect(() => {
+    const transformMeals = (mealsObj) => {
+      const loadedMeals = Object.keys(mealsObj).map(k => mealsObj[k]);
+
+      setMeals(loadedMeals);
+    };
+
+    fetchMeals({ url: MEALS_API }, transformMeals);
+  }, [fetchMeals]);
+
+  const mealsList = meals.map((meal) => (
     <MealItem
       key={meal.id}
       id={meal.id}
@@ -43,7 +33,9 @@ const AvailableMeals = () => {
   return (
     <section className={classes.meals}>
       <Card>
-        <ul>{mealsList}</ul>
+        {error && <p className={classes.error}>An error occurred while fetching meals: {error || 'unknown error'}</p>}
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && <ul>{mealsList}</ul>}
       </Card>
     </section>
   );

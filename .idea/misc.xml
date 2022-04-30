@@ -12,36 +12,44 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="265" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/.jb-gateway/Dockerfile" />
+          <option name="caretOffset" value="675" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/.gitpod.yml" />
         </OpenedFileInfo>
         <OpenedFileInfo>
           <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/index.js" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/App.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="2442" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/BasicForm.js" />
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/index.css" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="435" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/SimpleInput.js" />
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/store/CartProvider.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1618" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/.gitignore" />
+          <option name="caretOffset" value="211" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/Meals/Meals.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="590" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/hooks/use-input.js" />
+          <option name="caretOffset" value="830" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/Meals/AvailableMeals.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="96" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/actions/input-actions.js" />
+          <option name="caretOffset" value="147" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Constants.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="341" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/reducers/input-reducer.js" />
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/store/cart-context.js" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="176" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/Meals/AvailableMeals.module.css" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1049" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/hooks/use-http.js" />
         </OpenedFileInfo>
       </list>
     </option>
