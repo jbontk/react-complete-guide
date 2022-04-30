@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import ReactDOM from 'react-dom/client';
+import * as ReactDOM from 'react-dom';
 
 import classes from './Modal.module.css';
 
