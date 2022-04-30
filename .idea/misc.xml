@@ -20,7 +20,7 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/index.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1230" />
+          <option name="caretOffset" value="2442" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/BasicForm.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -28,8 +28,20 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/SimpleInput.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
+          <option name="caretOffset" value="1618" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/.gitignore" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="590" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/hooks/use-input.js" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="96" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/actions/input-actions.js" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="341" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/reducers/input-reducer.js" />
         </OpenedFileInfo>
       </list>
     </option>
