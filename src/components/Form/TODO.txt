@@ -1,0 +1,19 @@
+Create form:
+- first name
+- last name
+- email
+
+- parent form config = object:
+  - keys: form config name
+  - values: form config destructured + validation rules array
+
+- form config (label, name, type, [opt] id = def. name, [opt] init value):
+  - return function renderInput, that when called, outputs:
+  <><label htmlFor={id}</label><input type={type} name={name} /><>
+
+- useForm hook:
+  - useState(parentFormConfig)
+  - calls renderInput of each formConfig
+  - detects onChange, blur, etc
+  - applies validation rules
+  - return [renderInputs, isFormValid]
