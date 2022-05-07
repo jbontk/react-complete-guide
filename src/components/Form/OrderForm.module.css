@@ -1,0 +1,18 @@
+.orderForm {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.orderForm div[class^="Input"]  {
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.orderForm label {
+    width: 25%;
+}
+
+.orderForm input {
+    width: 75%;
+}

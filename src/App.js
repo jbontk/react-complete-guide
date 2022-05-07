@@ -14,10 +14,6 @@ function App() {
     setCartIsShown(true);
   };
 
-  const showOrderFormHandler = () => {
-    setOrderFormIsShown(true);
-  };
-
   const hideCartHandler = () => {
     setCartIsShown(false);
   };
@@ -26,11 +22,16 @@ function App() {
     setOrderFormIsShown(false);
   };
 
+  const placeOrderHandler = () => {
+    setCartIsShown(false);
+    setOrderFormIsShown(true);
+  }
+
   return (
     <CartProvider>
-      {cartIsShown && <Cart onClose={hideCartHandler} />}
+      {cartIsShown && <Cart onClose={hideCartHandler} onOrder={placeOrderHandler} />}
       {orderFormIsShown && <OrderForm onClose={closeOrderFormHandler} />}
-      <Header onShowCart={showCartHandler} onShowOrderForm={showOrderFormHandler} />
+      <Header onShowCart={showCartHandler} />
       <main>
         <Meals />
       </main>
