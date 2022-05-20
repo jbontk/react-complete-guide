@@ -12,6 +12,8 @@ const OrderForm = (props) => {
             {renderForm()}
         </div>
         <div className={actionButtonClasses.actions}>
+            <button className={actionButtonClasses['button-alt']} onClick={props.onClose}>Close</button>
+            <button className={actionButtonClasses['button-alt']} onClick={props.onBackToCart}>Back to Your Cart</button>
             <button className={actionButtonClasses.button} disabled={!formIsValid}>Submit order</button>
         </div>
     </Modal>

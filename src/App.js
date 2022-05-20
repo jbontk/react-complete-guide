@@ -12,13 +12,15 @@ function App() {
 
   const showCartHandler = () => {
     setCartIsShown(true);
+    setOrderFormIsShown(false);
   };
 
   const hideCartHandler = () => {
     setCartIsShown(false);
   };
 
-  const closeOrderFormHandler = () => {
+  const closeHandler = () => {
+    setCartIsShown(false);
     setOrderFormIsShown(false);
   };
 
@@ -30,7 +32,7 @@ function App() {
   return (
     <CartProvider>
       {cartIsShown && <Cart onClose={hideCartHandler} onOrder={placeOrderHandler} />}
-      {orderFormIsShown && <OrderForm onClose={closeOrderFormHandler} />}
+      {orderFormIsShown && <OrderForm onBackToCart={showCartHandler} onClose={closeHandler} />}
       <Header onShowCart={showCartHandler} />
       <main>
         <Meals />
