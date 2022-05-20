@@ -1,6 +1,7 @@
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
+import commonClasses from '../UI/Common.module.css';
 import useHttp from "../../hooks/use-http";
 import {useEffect, useState} from "react";
 import {MEALS_API} from "../../Constants";
@@ -33,7 +34,7 @@ const AvailableMeals = () => {
   return (
     <section className={classes.meals}>
       <Card>
-        {error && <p className={classes.error}>An error occurred while fetching meals: {error || 'unknown error'}</p>}
+        {error && <p className={commonClasses.error}>An error occurred while fetching meals: {error || 'unknown error'}</p>}
         {isLoading && <p>Loading...</p>}
         {!isLoading && <ul>{mealsList}</ul>}
       </Card>

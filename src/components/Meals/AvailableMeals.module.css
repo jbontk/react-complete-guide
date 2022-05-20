@@ -11,9 +11,6 @@
   padding: 0;
 }
 
-.meals p.error {
-  color: red;
-}
 
 @keyframes meals-appear {
   from {
