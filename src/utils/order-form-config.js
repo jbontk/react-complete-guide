@@ -5,7 +5,9 @@ const buildFormItem = (id, label, type, validationRules = []) => ({
     render: ((changeHandler, blurHandler, value, isValid, errorMessage) => <Input key={id} label={label} valid={isValid} errorMessage={errorMessage}
                                                                    input={{id: id, name: id, type: type, onChange: changeHandler, value: value, onBlur: blurHandler }}/>),
     validationRules: validationRules,
-    value: ''
+    value: '',
+    isValid: undefined,
+    errorMessage: ''
 })
 
 const orderFormConfig =

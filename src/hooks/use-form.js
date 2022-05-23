@@ -35,7 +35,7 @@ const useForm = (formConfig) => {
         setForm(prev => ({...prev, [name]: {...prev[name], isValid, errorMessage} }));
     }
 
-    const formIsValid = false;
+    const formIsValid = Object.values(form).every(f => f.isValid);
 
     return [renderForm, formIsValid];
 }
