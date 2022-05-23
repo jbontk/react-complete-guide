@@ -7,6 +7,8 @@ import Modal from "../UI/Modal";
 const OrderForm = (props) => {
     const [renderForm, formIsValid] = useForm(orderFormConfig);
 
+    console.log(`formIsValid is: ${formIsValid}`)
+
     return <Modal onClose={props.onClose}>
         <div className={classes.orderForm}>
             {renderForm()}
