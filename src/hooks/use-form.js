@@ -40,7 +40,7 @@ const useForm = (formConfig) => {
 
     const formIsValid = Object.values(form).every(f => f.isValid);
 
-    return [renderForm, formIsValid];
+    return [renderForm, formIsValid, form];
 }
 
 export default useForm;
