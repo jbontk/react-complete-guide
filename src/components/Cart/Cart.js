@@ -6,6 +6,7 @@ import classes from './Cart.module.css';
 import actionAndButtonClasses from '../UI/ActionButton.module.css';
 import CartContext from '../../store/cart-context';
 import Checkout from "./Checkout";
+import {ORDERS_API} from "../../Constants";
 
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
@@ -41,6 +42,16 @@ const Cart = (props) => {
     </ul>
   );
 
+  const submitOrderHandler = (userData) => {
+    fetch(ORDERS_API, {
+      method: 'POST',
+      body: JSON.stringify({
+        user: userData,
+        orderItems: cartCtx.items
+      })
+    })
+  }
+
   const modalActions = <div className={actionAndButtonClasses.actions}>
     <button className={actionAndButtonClasses['button--alt']} onClick={props.onClose}>
       Close
@@ -55,7 +66,7 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onClose}/>}
+      {isCheckout && <Checkout onCancel={props.onClose} onConfirm={submitOrderHandler}/>}
       {!isCheckout && modalActions}
     </Modal>
   );

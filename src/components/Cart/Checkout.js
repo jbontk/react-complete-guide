@@ -43,7 +43,12 @@ const Checkout = (props) => {
             return;
         }
 
-        // Submit
+        props.onConfirm({
+            name: enteredName,
+            street: enteredStreet,
+            postalCode: enteredPostal,
+            city: enteredCity
+        });
     };
 
     return (
