@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'cart',
-  initialState: {items: {}, showCart: false},
+  initialState: {items: {}},
   reducers: {
     addToCart({items}, {payload}) {
       const {id, quantity} = payload;
@@ -22,15 +22,12 @@ const slice = createSlice({
       const existingItem = items[id];
       if (existingItem) {
         existingItem.quantity -= quantity;
-        if (existingItem.quantity === 0) {
+        if (existingItem.quantity <= 0) {
           delete items[id];
         } else {
           existingItem.total = existingItem.quantity * existingItem.price;
         }
       }
-    },
-    toggleCart(state) {
-      state.showCart = !state.showCart;
     }
   }
 });

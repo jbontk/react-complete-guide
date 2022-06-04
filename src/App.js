@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 
 function App() {
 
-  const showCart = useSelector(({cart}) => cart.showCart);
+  const showCart = useSelector(({ui}) => ui.showCart);
 
   return (
     <Layout>
