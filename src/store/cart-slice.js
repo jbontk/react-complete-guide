@@ -2,9 +2,10 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'cart',
-  initialState: {items: {}},
+  initialState: {items: {}, changed: false},
   reducers: {
-    addToCart({items}, {payload}) {
+    addToCart(state, {payload}) {
+      const {items} = state;
       const {id, quantity} = payload;
 
       const existingItem = items[id];
@@ -15,8 +16,10 @@ const slice = createSlice({
         const {title, price} = payload;
         items[id] = {title, price, quantity, total: quantity * price};
       }
+      state.changed = true;
     },
-    removeFromCart({items}, {payload}) {
+    removeFromCart(state, {payload}) {
+      const {items} = state;
       const {id, quantity} = payload;
 
       const existingItem = items[id];
@@ -28,11 +31,10 @@ const slice = createSlice({
           existingItem.total = existingItem.quantity * existingItem.price;
         }
       }
+      state.changed = true;
     },
     replaceCart(state, {payload}) {
-      if (payload.items) {
-        state.items = payload.items;
-      }
+        state.items = payload?.items || {}; // question mark because payload can be equal to null when cart node does not exist in Firebase
     }
   }
 });

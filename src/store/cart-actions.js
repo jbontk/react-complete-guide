@@ -34,7 +34,7 @@ export const sendCartData = (cart) => {
         message: 'Sending Cart Data'
       }));
 
-      const response = await fetch(CART_API, {method: 'PUT', body: JSON.stringify(cart)});
+      const response = await fetch(CART_API, {method: 'PUT', body: JSON.stringify({items: cart.items})});
 
       if (!response.ok) {
         throw new Error('Failed sending Cart data');
