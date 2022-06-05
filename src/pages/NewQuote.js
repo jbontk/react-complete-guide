@@ -9,9 +9,7 @@ const NewQuote = () => {
     dispatch(quotesActions.addQuote({text, author}));
   };
 
-  return <section>
-    <QuoteForm onAddQuote={addQuoteHandler}/>
-  </section>;
+  return <QuoteForm onAddQuote={addQuoteHandler}/>;
 };
 
 export default NewQuote;

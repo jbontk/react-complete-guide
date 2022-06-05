@@ -6,9 +6,7 @@ const AllQuotes = () => {
 
   const quotes = Object.values(quotesObject).map(q => ({...q}));
 
-  return <section>
-    <QuoteList quotes={quotes}/>
-  </section>;
+  return <QuoteList quotes={quotes}/>
 };
 
 export default AllQuotes;

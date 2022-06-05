@@ -8,11 +8,15 @@ const QuoteDetail = () => {
   const quotesObject = useSelector(({quotes}) => quotes);
   const quote = quotesObject[quoteId];
 
+  if (!quote) {
+    return <p>No quote Found!</p>;
+  }
+
 
   return <section>
     <HighlightedQuote {...quote} />
     <Route path='/quotes/:quoteId/comments'>
-      <Comments />
+      <Comments/>
     </Route>
   </section>;
 };
