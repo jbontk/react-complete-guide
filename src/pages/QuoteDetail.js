@@ -1,6 +1,7 @@
-import {useParams} from 'react-router-dom';
+import {Route, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import HighlightedQuote from '../components/quotes/HighlightedQuote';
+import Comments from '../components/comments/Comments';
 
 const QuoteDetail = () => {
   const {quoteId} = useParams();
@@ -10,6 +11,9 @@ const QuoteDetail = () => {
 
   return <section>
     <HighlightedQuote {...quote} />
+    <Route path='/quotes/:quoteId/comments'>
+      <Comments />
+    </Route>
   </section>;
 };
 
