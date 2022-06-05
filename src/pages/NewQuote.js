@@ -1,20 +1,27 @@
 import QuoteForm from '../components/quotes/QuoteForm';
-import {useDispatch} from 'react-redux';
-import {quotesActions} from '../store/quotes-slice';
 import {useHistory} from 'react-router-dom';
+import useHttp from '../hooks/use-http';
+import {addQuote} from '../lib/api';
+import {useEffect} from 'react';
 
 const NewQuote = () => {
 
+  const {sendRequest, status} = useHttp(addQuote)
   const history = useHistory();
 
-  const dispatch = useDispatch();
-  const addQuoteHandler = ({text, author}) => {
-    dispatch(quotesActions.addQuote({text, author}));
+  useEffect(() => {
+    if (status === 'completed') {
+      history.push('/quotes');
+    }
 
-    history.push('/quotes');
+  }, [status, history]);
+
+
+  const addQuoteHandler = (quoteData) => {
+    sendRequest(quoteData);
   };
 
-  return <QuoteForm onAddQuote={addQuoteHandler}/>;
+  return <QuoteForm isLoading={status === 'pending'} onAddQuote={addQuoteHandler}/>;
 };
 
 export default NewQuote;
