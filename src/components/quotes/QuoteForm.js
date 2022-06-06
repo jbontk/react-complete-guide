@@ -1,12 +1,12 @@
-import {useRef, useState} from 'react';
+import {useRef/*, useState*/} from 'react';
 
 import Card from '../UI/Card';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import classes from './QuoteForm.module.css';
-import {Prompt} from 'react-router-dom';
+//import {Prompt} from 'react-router-dom';
 
 const QuoteForm = (props) => {
-  const [isEntering, setIsEntering] = useState(false);
+  //const [isEntering, setIsEntering] = useState(false);
   const authorInputRef = useRef();
   const textInputRef = useRef();
 
@@ -21,13 +21,14 @@ const QuoteForm = (props) => {
     props.onAddQuote({author: enteredAuthor, text: enteredText});
   }
 
-  const focusFormHandler = () => setIsEntering(true);
+  const focusFormHandler = () => {};//setIsEntering(true);
 
-  const completeEnteringHandler = () => setIsEntering(false);
+  const completeEnteringHandler = () => {};//setIsEntering(false);
+
+  // <Prompt when={isEntering} message={() => 'Are you sure you want to leave?'}/>
 
   return (
     <>
-      <Prompt when={isEntering} message={() => 'Are you sure you want to leave?'}/>
       <Card>
         <form className={classes.form} onSubmit={submitFormHandler} onFocus={focusFormHandler}>
           {props.isLoading && (
