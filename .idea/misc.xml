@@ -11,24 +11,24 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/index.css" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="248" />
+          <option name="caretOffset" value="753" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/package.json" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="502" />
+          <option name="caretOffset" value="447" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/App.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="87" />
+          <option name="caretOffset" value="202" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/pages/Welcome.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="261" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/MainHeader.js" />
+          <option name="caretOffset" value="252" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/pages/ProductDetail.js" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/pages/ProductDetail.js" />
+          <option name="caretOffset" value="210" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/components/MainHeader.js" />
         </OpenedFileInfo>
       </list>
     </option>

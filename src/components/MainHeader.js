@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import classes from './MainHeader.module.css';
 
@@ -8,12 +8,12 @@ const MainHeader = () => {
       <nav>
         <ul>
           <li>
-            <NavLink className={(navData) => navData.isActive ? classes.active : '' } to='/welcome'>
+            <NavLink className={({isActive}) => isActive ? classes.active : ''} to='/welcome'>
               Welcome
             </NavLink>
           </li>
           <li>
-            <NavLink className={(navData) => navData.isActive ? classes.active : '' } to='/products'>
+            <NavLink className={({isActive}) => isActive ? classes.active : ''} to='/products'>
               Products
             </NavLink>
           </li>
