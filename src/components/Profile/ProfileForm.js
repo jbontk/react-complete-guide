@@ -20,7 +20,7 @@ const ProfileForm = () => {
           {
               body:  JSON.stringify({
                   idToken: authCtx.token,
-                  returnSecureToken: false,
+                  returnSecureToken: true,
                   password
               }),
               headers: {'Content-Type': 'application/json'},
@@ -29,6 +29,8 @@ const ProfileForm = () => {
           .then(r => {
               if (r.ok) {
                   return r.json()
+                      // Refresh idToken
+                      .then(({idToken, expiresIn}) => authCtx.login(idToken, new Date().getTime() + expiresIn * 1000));
               }
               else {
                   return r.json().then(d => {
