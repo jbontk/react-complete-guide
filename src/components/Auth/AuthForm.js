@@ -3,8 +3,11 @@ import {useContext, useRef, useState} from 'react';
 import classes from './AuthForm.module.css';
 import {FIREBASE_API_KEY} from "../../constants";
 import AuthContext from "../../store/auth-context";
+import {useNavigate} from "react-router-dom";
 
 const AuthForm = () => {
+
+    const navigate = useNavigate();
 
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -55,8 +58,11 @@ const AuthForm = () => {
                 }
             })
             .then(data => authCtx.login(data.idToken))
+            .then(_ => navigate('/', { replace: true}))
             .catch(e => alert(e.message))
-            .finally(() => setIsLoading(false));
+            .finally(() => {
+                setIsLoading(false);
+            });
 
     }
 

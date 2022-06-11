@@ -2,8 +2,11 @@ import classes from './ProfileForm.module.css';
 import {useContext, useRef} from "react";
 import {FIREBASE_API_KEY} from "../../constants";
 import AuthContext from "../../store/auth-context";
+import {useNavigate} from "react-router-dom";
 
 const ProfileForm = () => {
+
+  const navigate = useNavigate();
 
   const passwordRef = useRef();
     const authCtx = useContext(AuthContext);
@@ -37,7 +40,7 @@ const ProfileForm = () => {
                   })
               }
           })
-          .then(d => d)
+          .then(_ => navigate('/', {replace: true}))
           .catch(e => alert(e?.message || e));
 
   }
