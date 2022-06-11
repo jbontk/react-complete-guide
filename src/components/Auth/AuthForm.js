@@ -57,7 +57,7 @@ const AuthForm = () => {
                     return r.json();
                 }
             })
-            .then(data => authCtx.login(data.idToken))
+            .then(data => authCtx.login(data.idToken, new Date().getTime() + data.expiresIn * 1000))
             .then(_ => navigate('/', { replace: true}))
             .catch(e => alert(e.message))
             .finally(() => {
