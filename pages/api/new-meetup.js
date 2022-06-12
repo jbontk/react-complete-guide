@@ -3,6 +3,9 @@
 
 import {MongoClient, ServerApiVersion} from 'mongodb';
 
+export const MONGO_URI = 'mongodb+srv://mdbtest:qKDLH3yIs89fMcSi@cluster0.qbr8ydz.mongodb.net/?retryWrites=true&w=majority';
+
+
 async function handler(req, res) {
   if (req.method === 'POST') {
     const data = req.body;
@@ -11,9 +14,8 @@ async function handler(req, res) {
 
     console.log('received post request', data);
 
-    const uri = 'mongodb+srv://mdbtest:qKDLH3yIs89fMcSi@cluster0.qbr8ydz.mongodb.net/?retryWrites=true&w=majority';
     try {
-      const client = new MongoClient(uri, {
+      const client = new MongoClient(MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         serverApi: ServerApiVersion.v1
