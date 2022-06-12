@@ -26,7 +26,7 @@ export const getStaticProps = async (context) => {
   const meetupId = context.params.meetupId;
   console.log(meetupId);
 
-  const fallbackTitle = 'Fallback!'
+  const fallbackTitle = `Fallback because ${meetupId} not found!`
   const fallbackMeetup = {...DUMMY_MEETUPS.find(({id}) => id === 'm1'), title: fallbackTitle};
 
   return {
