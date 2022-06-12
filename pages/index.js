@@ -1,8 +1,8 @@
 import MeetupList from '../components/meetups/MeetupList';
-import axios from 'axios';
 import { MONGO_URI } from './api/new-meetup';
 import { MongoClient } from 'mongodb';
 import { cleanMongoObject } from '../utils';
+import Head from 'next/head';
 
 export const DUMMY_MEETUPS = [{
   id: 'm1',
@@ -20,7 +20,13 @@ export const DUMMY_MEETUPS = [{
 }];
 
 function HomePage(props) {
-  return <MeetupList {...props} />
+  return <>
+    <Head>
+      <title>React Meetups</title>
+      <meta name='description' content='Browse a huge list of highly active React meetups!' />
+    </Head>
+    <MeetupList {...props} />
+  </>
 }
 
 // export const getServerSideProps = async (context) => {
@@ -47,14 +53,14 @@ export const getStaticProps = async (context) => {
   try {
     const client = await MongoClient.connect(MONGO_URI);
     meetups = await client
-    .db('meetups')
-    .collection('meetups')
-    .find()
-    .toArray();
-  
+      .db('meetups')
+      .collection('meetups')
+      .find()
+      .toArray();
+
     // Remove _id property to avoid serialization error
     meetups = meetups.map(cleanMongoObject);
-  
+
     await client.close();
   }
   catch (e) {
