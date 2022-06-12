@@ -9,7 +9,7 @@ function DetailPage() {
   const newsId = router.query.newsId;
   console.log(newsId);
 
-  return <h1>The Detail Page</h1>
+  return <h1>The Detail Page for {newsId}</h1>
 }
 
 export default DetailPage;
