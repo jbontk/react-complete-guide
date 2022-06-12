@@ -1,15 +1,40 @@
-import {useRouter} from 'next/router';
 import {DUMMY_MEETUPS} from '../index';
 import MeetupDetails from '../../components/meetups/MeetupDetails';
 
-const MeetupDetailsPage = () => {
-  const router = useRouter();
-  const meetupId = router.query.meetupId;
-
-  const meetup = DUMMY_MEETUPS.find(m => m.id === meetupId);
-
+const MeetupDetailsPage = ({meetup}) => {
 
   return <MeetupDetails {...meetup} />
 }
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [{
+      params: {
+        meetupId: 'm1'
+      }
+    },{
+      params: {
+        meetupId: 'm2'
+      }
+    }],
+    fallback: true
+  }
+};
+
+export const getStaticProps = async (context) => {
+
+  const meetupId = context.params.meetupId;
+  console.log(meetupId);
+
+  const fallbackTitle = 'Fallback!'
+  const fallbackMeetup = {...DUMMY_MEETUPS.find(({id}) => id === 'm1'), title: fallbackTitle};
+
+  return {
+    props: {
+      meetup: DUMMY_MEETUPS.find(({id}) => id === meetupId) || fallbackMeetup
+    },
+    revalidate: 5
+  }
+};
 
 export default MeetupDetailsPage;
