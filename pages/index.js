@@ -2,6 +2,7 @@ import MeetupList from '../components/meetups/MeetupList';
 import axios from 'axios';
 import { MONGO_URI } from './api/new-meetup';
 import { MongoClient } from 'mongodb';
+import { cleanMongoObject } from '../utils';
 
 export const DUMMY_MEETUPS = [{
   id: 'm1',
@@ -52,11 +53,7 @@ export const getStaticProps = async (context) => {
     .toArray();
   
     // Remove _id property to avoid serialization error
-    meetups = meetups.map(m => {
-      const id = m._id.toString();
-      delete m._id;
-      return ({ ...m, id });
-    });
+    meetups = meetups.map(cleanMongoObject);
   
     await client.close();
   }
