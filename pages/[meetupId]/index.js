@@ -14,11 +14,9 @@ export const getStaticPaths = async () => {
   let meetupIds = [];
   try {
     const client = await MongoClient.connect(MONGO_URI);
-    meetupIds = await client
-    .db('meetups')
-    .collection('meetups')
-    .find({}, {_id: 1})
-    .toArray();
+    const db = client.db('meetups');
+    const collection = db.collection('meetups');
+    meetupIds = await collection.find({}, {_id: 1}).toArray();
 
     console.log('meetupIds:', meetupIds);
   
