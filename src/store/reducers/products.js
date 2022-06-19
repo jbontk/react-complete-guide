@@ -1,6 +1,6 @@
-import { TOGGLE_FAV } from '../actions/products';
+import {TOGGLE_FAV} from '../actions/products';
 
-const initialState = {
+export const initialState = {
   products: [
     {
       id: 'p1',
