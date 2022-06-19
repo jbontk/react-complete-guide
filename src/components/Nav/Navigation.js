@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import './Navigation.css';
 
@@ -9,7 +9,7 @@ const Navigation = props => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/" exact>All Products</NavLink>
+            <NavLink to="/" end>All Products</NavLink>
           </li>
           <li>
             <NavLink to="/favorites">Favorites</NavLink>
