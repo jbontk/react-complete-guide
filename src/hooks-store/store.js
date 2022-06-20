@@ -5,7 +5,7 @@ let listeners = [];
 let actions = {};
 
 
-export const useStore = () => {
+export const useStore = (shouldListen = true) => {
   const setState = useState(globalState)[1];
 
   const dispatch = (actionIdentifier, payload) => {
@@ -16,12 +16,16 @@ export const useStore = () => {
   }
 
   useEffect(() => {
-    listeners.push(setState);
+    if (shouldListen) {
+      listeners.push(setState);
+    }
 
     // useEffect's cleanup function
     return () => {
-      const listenerIndex = listeners.findIndex(l => l === setState);
-      delete listeners[listenerIndex];
+      if (shouldListen) {
+        const listenerIndex = listeners.findIndex(l => l === setState);
+        delete listeners[listenerIndex];
+      }
     }
 
   }, [setState]);
