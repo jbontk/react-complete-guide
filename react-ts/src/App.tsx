@@ -12,6 +12,8 @@ function App() {
     setTodos(prev => [...prev, new Todo(text)]);
   }
 
+  console.log(todos);
+
   return (
     <div className="App">
       <NewTodo onAddTodo={addTodoHandler} />
