@@ -8,8 +8,13 @@ function App() {
 
   const [todos, setTodos] = useState<Todo[]>([new Todo('shave'), new Todo('brush teeth')]);
 
-  function addTodoHandler(text: string) {
+  const addTodoHandler = (text: string) => {
     setTodos(prev => [...prev, new Todo(text)]);
+  };
+
+  const removeTodoHandler = (id: string): void => {
+    setTodos(prev => prev.filter(t => t.id !== id));
+    return;
   }
 
   console.log(todos);
@@ -17,7 +22,7 @@ function App() {
   return (
     <div className="App">
       <NewTodo onAddTodo={addTodoHandler} />
-    <Todos items={todos} />
+    <Todos items={todos} onRemoveTodo={removeTodoHandler} />
     </div>
   );
 }
