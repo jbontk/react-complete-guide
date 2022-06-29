@@ -3,6 +3,7 @@ import './App.css';
 import Todos from './components/Todos';
 import Todo from './models/todo';
 import NewTodo from './components/NewTodos';
+import TodosContext from './store/todos-context';
 
 function App() {
 
@@ -20,10 +21,16 @@ function App() {
   console.log(todos);
 
   return (
-    <div className="App">
-      <NewTodo onAddTodo={addTodoHandler} />
-    <Todos items={todos} onRemoveTodo={removeTodoHandler} />
-    </div>
+    <TodosContext.Provider value={{
+      items: todos,
+      addTodo: addTodoHandler,
+      removeTodo: removeTodoHandler
+    }}>
+      <div className="App">
+        <NewTodo />
+        <Todos />
+      </div>
+    </TodosContext.Provider>
   );
 }
 
