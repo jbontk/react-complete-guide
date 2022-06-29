@@ -1,6 +1,6 @@
 import React, {FormEvent, useContext, useRef} from 'react';
 import classes from './NewTodo.module.css';
-import TodosContext from '../store/todos-context';
+import {TodosContext} from '../store/todos-context';
 
 const NewTodo : React.FC = (props) => {
 
