@@ -4,7 +4,7 @@ import Card from '../UI/Card';
 import './IngredientForm.css';
 
 const IngredientForm = React.memo(props => {
-  const submitHandler = event => {
+  const submitHandler = (event:  React.SyntheticEvent) => {
     event.preventDefault();
     // ...
   };

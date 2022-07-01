@@ -1,8 +1,17 @@
-import React from 'react';
-
 import './IngredientList.css';
 
-const IngredientList = props => {
+type Ingredient = {
+  id: string,
+  title: string,
+  amount: number
+}
+
+type IngredientListProps = {
+  ingredients: Ingredient[],
+  onRemoveItem: (id: string) => {}
+}
+
+const IngredientList = (props: IngredientListProps) => {
   return (
     <section className="ingredient-list">
       <h2>Loaded Ingredients</h2>

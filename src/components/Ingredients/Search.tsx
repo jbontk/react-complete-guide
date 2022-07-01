@@ -1,7 +1,6 @@
-import React from 'react';
-
 import Card from '../UI/Card';
 import './Search.css';
+import React from 'react';
 
 const Search = React.memo(props => {
   return (

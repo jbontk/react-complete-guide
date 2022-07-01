@@ -1,8 +1,13 @@
 import React from 'react';
 
 import './ErrorModal.css';
+import {DefaultProps} from './Card';
 
-const ErrorModal = React.memo(props => {
+type ModalProps = DefaultProps&{
+  onClose: () => {}
+}
+
+const ErrorModal = React.memo((props: ModalProps) => {
   return (
     <React.Fragment>
       <div className="backdrop" onClick={props.onClose} />
