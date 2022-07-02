@@ -1,9 +1,12 @@
 import './IngredientList.css';
 
-type Ingredient = {
-  id: string,
+export type IngredientWithoutId = {
   title: string,
   amount: number
+}
+
+export type Ingredient = IngredientWithoutId&{
+  id: string
 }
 
 type IngredientListProps = {
