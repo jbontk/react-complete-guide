@@ -11,6 +11,14 @@ import Search from "./Search";
 function Ingredients() {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
+  //
+  // useCallback is necessary because Search will fetch the ingredients on first load,
+  // which will update ingredients 
+  // which will trigger a re-rendering of this component 
+  // which will re-create loadIngredients function
+  // which will cause Search's effect to rerun since loadIngredients is listed
+  // as a dependency
+  //
   const loadIngredients = useCallback((ingredients: Ingredient[]) => setIngredients(ingredients), []);
 
   const addIngredient = async (ingredient: IngredientWithoutId) => {

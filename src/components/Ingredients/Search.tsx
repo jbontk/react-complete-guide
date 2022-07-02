@@ -14,34 +14,38 @@ const Search = React.memo((props: SearchProps) => {
   const { onLoadIngredients } = props;
 
   useEffect(() => {
-    const filterQuery = filter.trim().length
-      ? `?orderBy="title"&equalTo="${filter}"`
-      : "";
-      
-    //
-    // Need to update Firebase rules for filtering to work:
-    //
-    // {
-    //  "rules": {
-    //   .....
-    //     "ingredients": {
-    //         ".indexOn": "title"
-    //      }
-    //  }
-    // }
-    //
+    const timeout = setTimeout(() => {
+      const filterQuery = filter.trim().length
+        ? `?orderBy="title"&equalTo="${filter}"`
+        : "";
 
+      //
+      // Need to update Firebase rules for filtering to work:
+      //
+      // {
+      //  "rules": {
+      //   .....
+      //     "ingredients": {
+      //         ".indexOn": "title"
+      //      }
+      //  }
+      // }
+      //
 
-    axios
-      .get<{ [k: string]: { title: string; amount: number } }>(
-        INGREDIENTS_API + filterQuery
-      )
-      .then(({ data }) => {
-        const ingredientsArray = Object.keys(data).map(
-          (k) => new Ingredient(k, data[k].title, data[k].amount)
-        );
-        onLoadIngredients(ingredientsArray);
-      });
+      axios
+        .get<{ [k: string]: { title: string; amount: number } }>(
+          INGREDIENTS_API + filterQuery
+        )
+        .then(({ data }) => {
+          const ingredientsArray = Object.keys(data).map(
+            (k) => new Ingredient(k, data[k].title, data[k].amount)
+          );
+          onLoadIngredients(ingredientsArray);
+        });
+    }, 500);
+
+    return () => clearTimeout(timeout);
+
   }, [filter, onLoadIngredients]);
 
   return (
