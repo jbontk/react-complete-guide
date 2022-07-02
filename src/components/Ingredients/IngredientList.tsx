@@ -1,17 +1,9 @@
+import { Ingredient } from '../../models/ingredient';
 import './IngredientList.css';
-
-export type IngredientWithoutId = {
-  title: string,
-  amount: number
-}
-
-export type Ingredient = IngredientWithoutId&{
-  id: string
-}
 
 type IngredientListProps = {
   ingredients: Ingredient[],
-  onRemoveItem: (id: string) => {}
+  onRemoveItem: (id: string) => Ingredient[] | void
 }
 
 const IngredientList = (props: IngredientListProps) => {

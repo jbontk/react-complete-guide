@@ -1,25 +1,29 @@
-import React, {ChangeEvent, SyntheticEvent, useState} from 'react';
+import React, { ChangeEvent, SyntheticEvent, useState } from "react";
+import { Ingredient } from "../../models/ingredient";
 
-import Card from '../UI/Card';
-import './IngredientForm.css';
-import {IngredientWithoutId} from './IngredientList';
+import Card from "../UI/Card";
+import "./IngredientForm.css";
 
-const IngredientForm = React.memo(() => {
-  const [inputState, setInputState] = useState<IngredientWithoutId>({title: '', amount: 0});
+type IngredientFormProps = {
+  onAddIngredient: (ingredient: Ingredient) => Ingredient[] | void
+}
+
+const IngredientForm = React.memo((props: IngredientFormProps) => {
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState(0);
 
   const submitHandler = (event: SyntheticEvent) => {
     event.preventDefault();
-    // ...
+    if (!title.trim().length) {
+      return;
+    }
+
+    const ingredient: Ingredient = new Ingredient(title, amount);
+    props.onAddIngredient(ingredient);
   };
 
-  const titleChange = (e: ChangeEvent<HTMLInputElement>) => setInputState(prev => ({
-    title: e.target.value,
-    amount: prev.amount
-  }));
-  const amountChange = (e: ChangeEvent<HTMLInputElement>) => setInputState(prev => ({
-    title: prev.title,
-    amount: e.target.valueAsNumber
-  }));
+  const titleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const amountChange = (e: ChangeEvent<HTMLInputElement>) => setAmount(e.target.valueAsNumber);
 
   return (
     <section className="ingredient-form">
@@ -27,13 +31,21 @@ const IngredientForm = React.memo(() => {
         <form onSubmit={submitHandler}>
           <div className="form-control">
             <label htmlFor="title">Name</label>
-            <input type="text" id="title" value={inputState.title}
-                   onChange={titleChange}/>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={titleChange}
+            />
           </div>
           <div className="form-control">
             <label htmlFor="amount">Amount</label>
-            <input type="number" id="amount" value={inputState.amount}
-                   onChange={amountChange}/>
+            <input
+              type="number"
+              id="amount"
+              value={amount}
+              onChange={amountChange}
+            />
           </div>
           <div className="ingredient-form__actions">
             <button type="submit">Add Ingredient</button>
