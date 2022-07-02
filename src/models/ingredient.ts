@@ -1,7 +1,7 @@
-export class Ingredient {
-  public id: string;
+import { IngredientWithoutId } from "./ingredient-without-id";
 
-  constructor(public title: string, public amount: number) {
-    this.id = Math.random().toString();
+export class Ingredient extends IngredientWithoutId {
+  constructor(public id: string, public title: string, public amount: number) {
+    super(title, amount);
   }
 }

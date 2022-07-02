@@ -3,7 +3,7 @@ import './IngredientList.css';
 
 type IngredientListProps = {
   ingredients: Ingredient[],
-  onRemoveItem: (id: string) => Ingredient[] | void
+  onRemoveItem: (id: string) => Promise<void>
 }
 
 const IngredientList = (props: IngredientListProps) => {

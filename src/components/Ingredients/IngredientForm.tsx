@@ -1,24 +1,24 @@
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
-import { Ingredient } from "../../models/ingredient";
+import { IngredientWithoutId } from "../../models/ingredient-without-id";
 
 import Card from "../UI/Card";
 import "./IngredientForm.css";
 
 type IngredientFormProps = {
-  onAddIngredient: (ingredient: Ingredient) => Ingredient[] | void
+  onAddIngredient: (ingredient: IngredientWithoutId) => Promise<void>
 }
 
 const IngredientForm = React.memo((props: IngredientFormProps) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
 
-  const submitHandler = (event: SyntheticEvent) => {
+  const submitHandler = async (event: SyntheticEvent) => {
     event.preventDefault();
     if (!title.trim().length) {
       return;
     }
 
-    const ingredient: Ingredient = new Ingredient(title, amount);
+    const ingredient = new IngredientWithoutId(title, amount);
     props.onAddIngredient(ingredient);
   };
 
