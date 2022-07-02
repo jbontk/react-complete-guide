@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { INGREDIENTS_API, REMOTE_API } from "../..";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientWithoutId } from "../../models/ingredient-without-id";
@@ -11,16 +11,7 @@ import Search from "./Search";
 function Ingredients() {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
-  useEffect(() => {
-    axios
-      .get<{ [k: string]: { title: string; amount: number } }>(INGREDIENTS_API)
-      .then(({ data }) => {
-        const ingredientsArray = Object.keys(data).map(
-          (k) => new Ingredient(k, data[k].title, data[k].amount)
-        );
-        setIngredients(ingredientsArray);
-      });
-  }, []);
+  const loadIngredients = useCallback((ingredients: Ingredient[]) => setIngredients(ingredients), []);
 
   const addIngredient = async (ingredient: IngredientWithoutId) => {
     const { data }: { data: { name: string } } = await axios.post(
@@ -44,7 +35,7 @@ function Ingredients() {
       <IngredientForm onAddIngredient={addIngredient} />
 
       <section>
-        <Search />
+        <Search onLoadIngredients={loadIngredients} />
         <IngredientList
           ingredients={ingredients}
           onRemoveItem={removeIngredient}
