@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import { INGREDIENTS_API, REMOTE_API } from "../..";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientWithoutId } from "../../models/ingredient-without-id";
@@ -9,8 +9,28 @@ import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
 import Search from "./Search";
 
+enum ActionType {
+  ADD = 'ADD',
+  REMOVE = 'REMOVE',
+  SET = 'SET'
+}
+
+
+const ingredientsReducer = (currentIngredients: Ingredient[], action: {type: ActionType, payload: string | Ingredient | Ingredient[]}): Ingredient[] => {
+  switch(action.type) {
+    case ActionType.ADD:
+      const ingredientToAdd = action.payload as Ingredient;
+      return [...currentIngredients, ingredientToAdd];
+    case ActionType.REMOVE:
+      return currentIngredients.filter(i => i.id !== action.payload);
+      case ActionType.SET:
+        const newIngredients = action.payload as Ingredient[];
+        return newIngredients;
+  }
+}
+
 function Ingredients() {
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [ingredients, dispatch] = useReducer(ingredientsReducer, []);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +43,7 @@ function Ingredients() {
   // as a dependency
   //
   const loadIngredients = useCallback(
-    (ingredients: Ingredient[]) => setIngredients(ingredients),
+    (ingredients: Ingredient[]) => dispatch({type: ActionType.SET, payload: ingredients}),
     []
   );
 
@@ -33,17 +53,14 @@ function Ingredients() {
       INGREDIENTS_API,
       ingredient
     );
-    setIngredients((prev) => [
-      ...prev,
-      new Ingredient(data.name, ingredient.title, ingredient.amount),
-    ]);
+    dispatch({type: ActionType.ADD, payload: new Ingredient(data.name, ingredient.title, ingredient.amount)});
     setIsLoading(false);
   };
   const removeIngredient = async (id: string) => {
     try {
       setIsLoading(true);
       await axios.delete(`${REMOTE_API}/ingredients/${id}.json`);
-      setIngredients((prev) => prev.filter((i) => i.id !== id));
+      dispatch({type: ActionType.REMOVE, payload: id});
       setIsLoading(false);
     } catch (e: any) {
       let errorMessage = "Unknown error";
