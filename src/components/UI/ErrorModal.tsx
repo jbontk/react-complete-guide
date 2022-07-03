@@ -4,7 +4,7 @@ import './ErrorModal.css';
 import {DefaultProps} from './Card';
 
 type ModalProps = DefaultProps&{
-  onClose: () => {}
+  onClose: () => void
 }
 
 const ErrorModal = React.memo((props: ModalProps) => {

@@ -2,10 +2,12 @@ import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IngredientWithoutId } from "../../models/ingredient-without-id";
 
 import Card from "../UI/Card";
+import LoadingIndicator from "../UI/LoadingIndicator";
 import "./IngredientForm.css";
 
 type IngredientFormProps = {
-  onAddIngredient: (ingredient: IngredientWithoutId) => Promise<void>
+  onAddIngredient: (ingredient: IngredientWithoutId) => Promise<void>,
+  isLoading: boolean
 }
 
 const IngredientForm = React.memo((props: IngredientFormProps) => {
@@ -49,6 +51,7 @@ const IngredientForm = React.memo((props: IngredientFormProps) => {
           </div>
           <div className="ingredient-form__actions">
             <button type="submit">Add Ingredient</button>
+          {props.isLoading && <LoadingIndicator />}
           </div>
         </form>
       </Card>
