@@ -1,3 +1,4 @@
+import React from 'react';
 import { Ingredient } from '../../models/ingredient';
 import './IngredientList.css';
 
@@ -7,6 +8,7 @@ type IngredientListProps = {
 }
 
 const IngredientList = (props: IngredientListProps) => {
+  console.log('Rendering IngredientList');
   return (
     <section className="ingredient-list">
       <h2>Loaded Ingredients</h2>

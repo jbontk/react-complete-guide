@@ -14,6 +14,8 @@ const IngredientForm = React.memo((props: IngredientFormProps) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
 
+  console.log('Rendering IngredientForm');
+
   const submitHandler = async (event: SyntheticEvent) => {
     event.preventDefault();
     if (!title.trim().length) {
