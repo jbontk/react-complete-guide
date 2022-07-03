@@ -1,38 +1,19 @@
 import axios from "axios";
-import { useCallback, useReducer, useState } from "react";
+import { useCallback, useReducer } from "react";
 import { INGREDIENTS_API, REMOTE_API } from "../..";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientWithoutId } from "../../models/ingredient-without-id";
+import httpStateReducer, { HttpActionType } from "../../reducers/http-state-reducer";
+import ingredientsReducer, { IngredientActionType } from "../../reducers/ingredients-reducer";
 import ErrorModal from "../UI/ErrorModal";
 
 import IngredientForm from "./IngredientForm";
 import IngredientList from "./IngredientList";
 import Search from "./Search";
 
-enum ActionType {
-  ADD = 'ADD',
-  REMOVE = 'REMOVE',
-  SET = 'SET'
-}
-
-
-const ingredientsReducer = (currentIngredients: Ingredient[], action: {type: ActionType, payload: string | Ingredient | Ingredient[]}): Ingredient[] => {
-  switch(action.type) {
-    case ActionType.ADD:
-      const ingredientToAdd = action.payload as Ingredient;
-      return [...currentIngredients, ingredientToAdd];
-    case ActionType.REMOVE:
-      return currentIngredients.filter(i => i.id !== action.payload);
-      case ActionType.SET:
-        const newIngredients = action.payload as Ingredient[];
-        return newIngredients;
-  }
-}
-
 function Ingredients() {
-  const [ingredients, dispatch] = useReducer(ingredientsReducer, []);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [ingredients, ingredientsDispatch] = useReducer(ingredientsReducer, []);
+  const [httpState, httpStateDispatch] = useReducer(httpStateReducer, {isLoading: false, error: null});
 
   //
   // useCallback is necessary because Search will fetch the ingredients on first load,
@@ -43,43 +24,42 @@ function Ingredients() {
   // as a dependency
   //
   const loadIngredients = useCallback(
-    (ingredients: Ingredient[]) => dispatch({type: ActionType.SET, payload: ingredients}),
+    (ingredients: Ingredient[]) => ingredientsDispatch({type: IngredientActionType.SET, payload: ingredients}),
     []
   );
 
   const addIngredient = async (ingredient: IngredientWithoutId) => {
-    setIsLoading(true);
+    httpStateDispatch({type: HttpActionType.SEND});
     const { data }: { data: { name: string } } = await axios.post(
       INGREDIENTS_API,
       ingredient
     );
-    dispatch({type: ActionType.ADD, payload: new Ingredient(data.name, ingredient.title, ingredient.amount)});
-    setIsLoading(false);
+    ingredientsDispatch({type: IngredientActionType.ADD, payload: new Ingredient(data.name, ingredient.title, ingredient.amount)});
+    httpStateDispatch({type: HttpActionType.RESPONSE});
   };
   const removeIngredient = async (id: string) => {
     try {
-      setIsLoading(true);
+      httpStateDispatch({type: HttpActionType.SEND});
       await axios.delete(`${REMOTE_API}/ingredients/${id}.json`);
-      dispatch({type: ActionType.REMOVE, payload: id});
-      setIsLoading(false);
+      ingredientsDispatch({type: IngredientActionType.REMOVE, payload: id});
+      httpStateDispatch({type: HttpActionType.RESPONSE});
     } catch (e: any) {
       let errorMessage = "Unknown error";
       e instanceof Error && (errorMessage = e.message);
-      setError(errorMessage);
+      httpStateDispatch({type: HttpActionType.ERROR, payload: errorMessage});
     }
   };
 
   const clearError = () => {
-    setError(null);
-    setIsLoading(false);
+    httpStateDispatch({type: HttpActionType.CLEAR});
   };
 
   console.log(ingredients);
 
   return (
     <div className="App">
-      {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
-      <IngredientForm onAddIngredient={addIngredient} isLoading={isLoading} />
+      {httpState.error && <ErrorModal onClose={clearError}>{httpState.error}</ErrorModal>}
+      <IngredientForm onAddIngredient={addIngredient} isLoading={httpState.isLoading} />
 
       <section>
         <Search onLoadIngredients={loadIngredients} />
