@@ -13,7 +13,7 @@ const Search = React.memo((props: SearchProps) => {
   const [filter, setFilter] = useState("");
   const { onLoadIngredients } = props;
 
-  const fetchRequest = useHttp();
+  const {request, httpState} = useHttp();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -33,7 +33,7 @@ const Search = React.memo((props: SearchProps) => {
       //  }
       // }
       //
-      fetchRequest('GET', INGREDIENTS_API + filterQuery)
+      request('GET', INGREDIENTS_API + filterQuery)
         .then(data => {
           const ingredientsArray = Object.keys(data).map(
             (k) => new Ingredient(k, data[k].title, data[k].amount)
@@ -44,13 +44,14 @@ const Search = React.memo((props: SearchProps) => {
 
     return () => clearTimeout(timeout);
 
-  }, [filter, onLoadIngredients, fetchRequest]);
+  }, [filter, onLoadIngredients, request]);
 
   return (
     <section className="search">
       <Card>
         <div className="search-input">
           <label>Filter by Title</label>
+          {httpState.isLoading && <span>Loading...</span>}
           <input
             type="text"
             value={filter}

@@ -3,9 +3,6 @@ import { INGREDIENTS_API, REMOTE_API } from "../..";
 import useHttp from "../../hooks/use-http";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientWithoutId } from "../../models/ingredient-without-id";
-import httpStateReducer, {
-  HttpActionType,
-} from "../../reducers/http-state-reducer";
 import ingredientsReducer, {
   IngredientActionType,
 } from "../../reducers/ingredients-reducer";
@@ -17,13 +14,7 @@ import Search from "./Search";
 
 function Ingredients() {
   const [ingredients, ingredientsDispatch] = useReducer(ingredientsReducer, []);
-  const [httpState, httpStateDispatch] = useReducer(httpStateReducer, {
-    isLoading: false,
-    error: null,
-  });
-
-  const addRequest = useHttp(httpStateDispatch);
-  const removeRequest = useHttp(httpStateDispatch);
+  const {request, httpState, clearError} = useHttp();
 
   //
   // useCallback is necessary because Search will fetch the ingredients on first load,
@@ -46,7 +37,7 @@ function Ingredients() {
   // Add ingredient
   //
   const addIngredient = useCallback(async (ingredient: IngredientWithoutId) => {
-    const data = await addRequest(
+    const data = await request(
       "POST",
       INGREDIENTS_API,
       ingredient
@@ -55,19 +46,15 @@ function Ingredients() {
       type: IngredientActionType.ADD,
       payload: new Ingredient(data!.name, ingredient.title, ingredient.amount),
     });
-  }, [addRequest]);
+  }, [request]);
 
   //
   // Remove ingredient
   //
   const removeIngredient = useCallback(async (id: string) => {
-    await removeRequest("DELETE",`${REMOTE_API}/ingredients/${id}.json`);
+    await request("DELETE",`${REMOTE_API}/ingredients/${id}.json`);
     ingredientsDispatch({ type: IngredientActionType.REMOVE, payload: id });
-  }, [removeRequest]);
-
-  const clearError = useCallback(() => {
-    httpStateDispatch({ type: HttpActionType.CLEAR });
-  }, []);
+  }, [request]);
 
   console.log("Rendering Ingredients");
 
