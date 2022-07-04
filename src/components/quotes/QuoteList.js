@@ -9,11 +9,13 @@ const QuoteList = (props) => {
   const isAscending = queryParams.get('sort') === 'asc';
   const nextSort = isAscending ? 'desc' : 'asc';
 
-  const history = useNavigate();
-  const changeSortingHandler = () => history.push({
-    pathname: location.pathname,
-    search: `sort=${nextSort}`
-  });
+  const navigate = useNavigate();
+  const changeSortingHandler = () => {
+    return navigate({
+      pathname: location.pathname,
+      search: `sort=${nextSort}`
+    });
+  };
 
   return (
     <>
