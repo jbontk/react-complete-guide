@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useCallback, useMemo, useReducer } from "react";
 import { INGREDIENTS_API, REMOTE_API } from "../..";
+import useHttp from "../../hooks/use-http";
 import { Ingredient } from "../../models/ingredient";
 import { IngredientWithoutId } from "../../models/ingredient-without-id";
 import httpStateReducer, {
@@ -21,6 +21,9 @@ function Ingredients() {
     isLoading: false,
     error: null,
   });
+
+  const addRequest = useHttp(httpStateDispatch);
+  const removeRequest = useHttp(httpStateDispatch);
 
   //
   // useCallback is necessary because Search will fetch the ingredients on first load,
@@ -43,39 +46,24 @@ function Ingredients() {
   // Add ingredient
   //
   const addIngredient = useCallback(async (ingredient: IngredientWithoutId) => {
-    try {
-      httpStateDispatch({ type: HttpActionType.SEND });
-      const { data }: { data: { name: string } } = await axios.post(
-        INGREDIENTS_API,
-        ingredient
-      );
-      ingredientsDispatch({
-        type: IngredientActionType.ADD,
-        payload: new Ingredient(data.name, ingredient.title, ingredient.amount),
-      });
-      httpStateDispatch({ type: HttpActionType.RESPONSE });
-    } catch (e: any) {
-      let errorMessage = "Unknown error";
-      e instanceof Error && (errorMessage = e.message);
-      httpStateDispatch({ type: HttpActionType.ERROR, payload: errorMessage });
-    }
-  }, []);
+    const data = await addRequest(
+      "POST",
+      INGREDIENTS_API,
+      ingredient
+    );
+    ingredientsDispatch({
+      type: IngredientActionType.ADD,
+      payload: new Ingredient(data!.name, ingredient.title, ingredient.amount),
+    });
+  }, [addRequest]);
 
   //
   // Remove ingredient
   //
   const removeIngredient = useCallback(async (id: string) => {
-    try {
-      httpStateDispatch({ type: HttpActionType.SEND });
-      await axios.delete(`${REMOTE_API}/ingredients/${id}.json`);
-      ingredientsDispatch({ type: IngredientActionType.REMOVE, payload: id });
-      httpStateDispatch({ type: HttpActionType.RESPONSE });
-    } catch (e: any) {
-      let errorMessage = "Unknown error";
-      e instanceof Error && (errorMessage = e.message);
-      httpStateDispatch({ type: HttpActionType.ERROR, payload: errorMessage });
-    }
-  }, []);
+    await removeRequest("DELETE",`${REMOTE_API}/ingredients/${id}.json`);
+    ingredientsDispatch({ type: IngredientActionType.REMOVE, payload: id });
+  }, [removeRequest]);
 
   const clearError = useCallback(() => {
     httpStateDispatch({ type: HttpActionType.CLEAR });

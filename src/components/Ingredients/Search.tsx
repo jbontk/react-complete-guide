@@ -2,16 +2,18 @@ import Card from "../UI/Card";
 import "./Search.css";
 import React, { useEffect, useState } from "react";
 import { Ingredient } from "../../models/ingredient";
-import axios from "axios";
 import { INGREDIENTS_API } from "../..";
+import useHttp from "../../hooks/use-http";
 
 type SearchProps = {
   onLoadIngredients: (ingredeints: Ingredient[]) => void;
 };
 
 const Search = React.memo((props: SearchProps) => {
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState("");
   const { onLoadIngredients } = props;
+
+  const fetchRequest = useHttp();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -31,12 +33,8 @@ const Search = React.memo((props: SearchProps) => {
       //  }
       // }
       //
-
-      axios
-        .get<{ [k: string]: { title: string; amount: number } }>(
-          INGREDIENTS_API + filterQuery
-        )
-        .then(({ data }) => {
+      fetchRequest('GET', INGREDIENTS_API + filterQuery)
+        .then(data => {
           const ingredientsArray = Object.keys(data).map(
             (k) => new Ingredient(k, data[k].title, data[k].amount)
           );
@@ -46,7 +44,7 @@ const Search = React.memo((props: SearchProps) => {
 
     return () => clearTimeout(timeout);
 
-  }, [filter, onLoadIngredients]);
+  }, [filter, onLoadIngredients, fetchRequest]);
 
   return (
     <section className="search">
